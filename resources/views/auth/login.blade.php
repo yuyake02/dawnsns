@@ -8,10 +8,10 @@
 <div class='form-text'>
   <ul>
     <li>{{ Form::label('Mail Adress') }}
-      {{ Form::text('mail',null,['class' => 'input']) }}
+      {{ Form::text('mail',null,['class' => 'input' , 'placeholder' => 'Mail Adress']) }}
     </li>
     <li>{{ Form::label('Password') }}
-      {{ Form::password('password',['class' => 'input']) }}
+      {{ Form::password('password',['class' => 'input' , 'placeholder' => 'Password']) }}
     </li>
   </ul>
 </div>
