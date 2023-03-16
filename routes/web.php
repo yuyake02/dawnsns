@@ -30,9 +30,9 @@ Route::get('/added', 'Auth\RegisterController@added');
 
 
 //ログイン中のページ
-Route::get('/top', 'PostsController@index');
+Route::get('/top', 'PostsController@index')->name('top');
 
-Route::get('/profile', 'UsersController@profile');
+Route::get('/profile', 'UsersController@profile')->name('profile');
 
 Route::get('/search', 'UsersController@index');
 
