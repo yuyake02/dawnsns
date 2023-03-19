@@ -29,7 +29,7 @@
                 @csrf
             </form>
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">〇〇さん</button>
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ auth()->user()->username }}さん</button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="{{ route('top') }}">HOME</a>
                     <a class="dropdown-item" href="{{ route('profile') }}">プロフィール編集</a>
@@ -45,7 +45,7 @@
         </div>
         <div id="side-bar">
             <div id="confirm">
-                <p>〇〇さんの</p>
+                <p>{{ auth()->user()->username }}さんの</p>
                 <div>
                     <p>フォロー数</p>
                     <p>〇〇名</p>
