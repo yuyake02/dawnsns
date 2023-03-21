@@ -1,6 +1,6 @@
 @extends('layouts.login')
 
 @section('content')
-<h2>機能を実装していきましょう。</h2>
+<h2><img src="images/dawn.png"></h2>
 
 @endsection

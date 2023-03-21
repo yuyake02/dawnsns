@@ -5,20 +5,26 @@
 {!! Form::open() !!}
 
 <h2>新規ユーザー登録</h2>
+<div class='form-text'>
+  <ul>
+    <li>{{ Form::label('User Name') }}
+      {{ Form::text('username',null,['class' => 'input','placeholder' => 'UserName']) }}
+    </li>
 
-{{ Form::label('ユーザー名') }}
-{{ Form::text('username',null,['class' => 'input']) }}
+    <li>{{ Form::label('Mail Adress') }}
+      {{ Form::text('mail',null,['class' => 'input','placeholder' => 'MailAdress']) }}
+    </li>
 
-{{ Form::label('メールアドレス') }}
-{{ Form::text('mail',null,['class' => 'input']) }}
+    <li>{{ Form::label('Password') }}
+      {{ Form::text('password',null,['class' => 'input' , 'placeholder' => 'Password']) }}
+    </li>
 
-{{ Form::label('パスワード') }}
-{{ Form::text('password',null,['class' => 'input']) }}
-
-{{ Form::label('パスワード確認') }}
-{{ Form::text('password-confirm',null,['class' => 'input']) }}
-
-{{ Form::submit('登録') }}
+    <li>{{ Form::label('Password Confirm') }}
+      {{ Form::text('password-confirm',null,['class' => 'input' , 'placeholder' => 'PasswordConfirm']) }}
+    </li>
+  </ul>
+</div>
+{{ Form::submit('register') }}
 
 <p><a href="/login">ログイン画面へ戻る</a></p>
 
