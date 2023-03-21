@@ -40,3 +40,7 @@ Route::get('/follow-list', 'PostsController@index');
 Route::get('/follower-list', 'PostsController@index');
 
 Route::post('/logout', 'Auth\loginController@logout')->name('logout');
+
+//投稿機能のルーティング
+
+Route::resource('posts', 'PostsController');
