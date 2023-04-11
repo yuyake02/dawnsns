@@ -5,8 +5,16 @@
     @csrf
     <label for="posts"></label>
     <img src="images/dawn.png">
-    <textarea id="posts" name="posts" placeholder="何をつぶやこうか...?"></textarea>
+    <textarea id="posts" name="posts" placeholder="何をつぶやこうか...?" row="4"></textarea>
 
-    <button type="submit"><img src="images/post.png"></=></button>
+    <button type="submit"><img src="images/post.png"></button>
 </form>
+<hr style="border: none; border-top: 5px solid #D7D7D7;">
+<ul>
+    @foreach($posts as $post)
+    <li style="text-align: right;">{{ $post->created_at }}</li>
+    <li><img src="images/dawn.png">{{ auth()->user()->username }}</li>
+    <li style="border-bottom: 1px solid #D7D7D7; margin-bottom: 50px; padding: 50px">{{ $post->posts }}</li>
+    @endforeach
+</ul>
 @endsection

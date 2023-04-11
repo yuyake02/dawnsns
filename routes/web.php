@@ -44,3 +44,4 @@ Route::post('/logout', 'Auth\loginController@logout')->name('logout');
 //投稿機能のルーティング
 
 Route::resource('posts', 'PostsController');
+Route::get('/post', 'PostController@index')->name('posts.index');

@@ -25,6 +25,7 @@
     <header>
         <div id="head">
             <h1><a href="/top"><img src="images/main_logo.png"></a></h1>
+            <img class="user_img" src="images/dawn.png">
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
@@ -36,7 +37,6 @@
                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
                 </div>
             </div>
-            <img src="images/dawn.png">
         </div>
     </header>
     <div id="row">
