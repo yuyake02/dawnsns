@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Post;
 
 class PostsController extends Controller
@@ -10,6 +11,12 @@ class PostsController extends Controller
     //
     public function index()
     {
+        //マイページ遷移のためのデータ取得
+        $posts =  DB::table('users')
+            ->join('posts', 'users.id', '=', 'posts.user_id')
+            ->select('posts.user_id', 'posts.id', 'users.username', 'users.id as user_id')
+            ->get();
+        //投稿内容を高順表示
         $posts = Post::all();
         $posts = Post::orderBy('created_at', 'desc')->get();
 
