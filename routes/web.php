@@ -45,3 +45,9 @@ Route::post('/logout', 'Auth\loginController@logout')->name('logout');
 
 Route::resource('posts', 'PostsController');
 Route::get('/post', 'PostController@index')->name('posts.index');
+
+//マイページ遷移のルーティング
+Route::get('/user/{id}', [App\Http\Controllers\UsersController::class, 'show'])->name('user.show');
+//フォロー機能のルーティング
+Route::post('/follow/{user}', 'FollowsController@follow')->name('follow');
+Route::post('/unfollow/{user}', 'FollowsController@unfollow')->name('unfollow');
