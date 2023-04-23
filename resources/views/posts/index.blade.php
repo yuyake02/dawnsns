@@ -13,7 +13,7 @@
 <ul>
     @foreach($posts as $post)
     <li style="text-align: right;">{{ $post->created_at }}</li>
-    <li><img src="images/dawn.png">{{ auth()->user()->username }}</li>
+    <li><a href="{{ route('user.show', ["id" => $post->user_id]) }}"><img src="images/dawn.png">{{ $post->username }}</a>{{ auth()->user()->username }}</li>
     <li style="border-bottom: 1px solid #D7D7D7; margin-bottom: 50px; padding: 50px">{{ $post->posts }}</li>
     @endforeach
 </ul>
