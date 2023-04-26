@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Post;
 
 class PostsController extends Controller
@@ -35,8 +36,10 @@ class PostsController extends Controller
         $validatedData = $request->validate([
             'posts' => 'required',
         ]);
-
+        //ログインユーザーのIDを取得して、Postモデルに設定する
+        $user_id = Auth::user()->id;
         $post = new Post;
+        $post->user_id = $user_id;
         $post->posts = $validatedData['posts'];
         $post->save();
 
