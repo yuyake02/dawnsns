@@ -51,3 +51,9 @@ Route::get('/user/{id}', [App\Http\Controllers\UsersController::class, 'show'])-
 //フォロー機能のルーティング
 Route::post('/follow/{user}', 'FollowsController@follow')->name('follow');
 Route::post('/unfollow/{user}', 'FollowsController@unfollow')->name('unfollow');
+
+//投稿編集のルーティング
+Route::get('/posts/{id}edit', 'PostController@edit')->name('posts.edit');
+
+//投稿削除のルーティング
+Route::delete('/posts/{id}', 'PostController@destroy')->name('posts.destroy');
