@@ -31,4 +31,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+    //followerモデルとのリレーション設定
+    public function follows()
+    {
+        return $this->hasMany(Follow::class, 'follower');
+    }
+
+    public function followers()
+    {
+        return $this->hasMany(Follow::class, 'follow');
+    }
 }

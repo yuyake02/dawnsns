@@ -54,7 +54,7 @@ class PostsController extends Controller
         return view('posts.show', compact('post'));
     }
 
-    //投稿フォームを表示
+    //投稿フォームを編集
     public function edit($id)
     {
         $post = Post::findOrFail($id);
@@ -73,7 +73,7 @@ class PostsController extends Controller
         $post->body = $validatedData['posts'];
         $post->save();
 
-        return redirect('posts');
+        return redirect('posts.show', ['id' => $post->id]);
     }
 
     //指定された投稿を削除

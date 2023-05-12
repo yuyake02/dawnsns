@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Follow;
 
@@ -17,21 +18,27 @@ class FollowsController extends Controller
     {
         return view('follows.followerList');
     }
+    //フォロー情報をデータベースに保存
     public function follow(User $user)
     {
-        //フォローするユーザーのIDを取得
-        $followerId = auth()->id();
-        //フォロー情報をデータベースに保存
-        Follow::create([
-            'follower_id' => $followerId,
-            'follower_id' => $user->id,
+
+        $follow = Follow::create([
+            'follow' => $user->id,
+            'follower' => auth()->user()->id,
         ]);
+
+        return back();
     }
+
+    //フォロー情報をデータベースから削除
     public function unfollow(User $user)
     {
-        //フォロー解除するユーザーのIDを取得
-        $followerId = auth()->id();
-        //フォロー情報をデータベースから削除
-        Follow::where('follower_id', $followerId)->where('follower_id', $user->id)->delete();
+        $follow = Follow::where('follow', $user->id)
+            ->where('follower', auth()->user()->id)
+            ->first();
+
+        $follow->delete();
+
+        return back();
     }
 }
