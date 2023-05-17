@@ -8,16 +8,21 @@ use App\User;
 
 class UsersController extends Controller
 {
-    //
     public function profile()
     {
         return view('users.profile');
     }
-    public function search()
+
+    //　ユーザー検索
+    public function search(Request $request)
     {
-        return view('users.search');
+        $keyword = $request->input('keyword');
+        $users = User::search($keyword)->get();
+
+        return view('users.search', compact('users'));
     }
-    //マイページ遷移のコントローラー
+
+    //　マイページ遷移のコントローラー
     public function show(Request $request, $id)
     {
         $user = User::find($id);

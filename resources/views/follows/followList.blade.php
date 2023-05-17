@@ -1,5 +1,7 @@
 @extends('layouts.login')
-<p>テスト表示</p>
+
 @section('content')
+
+  <h3>Follow list</h3>
 
 @endsection

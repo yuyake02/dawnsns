@@ -7,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="ページの内容を表す文章" />
     <title></title>
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <!--スマホ,タブレット対応-->
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <!--サイトのアイコン指定-->
@@ -24,8 +24,8 @@
 <body>
     <header>
         <div id="head">
-            <h1><a href="/top"><img src="images/main_logo.png"></a></h1>
-            <img class="user_img" src="images/dawn.png">
+            <h1><a href="/top"><img src="{{ asset('images/main_logo.png') }} "></a></h1>
+            <img class="user_img" src="{{ asset('images/dawn.png') }}">
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
@@ -46,18 +46,20 @@
         <div id="side-bar">
             <div id="confirm">
                 <p>{{ auth()->user()->username }}さんの</p>
-                <div>
+                <div class="following-count">
                     <p>フォロー数</p>
-                    <p>〇〇名</p>
+                    <p>{{ Auth::user()->getFollowingCount() }}名</p>
                 </div>
                 <p class="btn"><a href="{{ route('follow-list') }}">フォローリスト</a></p>
-                <div>
+                <div class="followers-count">
                     <p>フォロワー数</p>
-                    <p>〇〇名</p>
+                    <p>{{ Auth::user()->getFollowersCount() }}名</p>
                 </div>
                 <p class="btn"><a href="{{ route('follower-list')}}">フォロワーリスト</a></p>
             </div>
-            <p class="btn"><a href="">ユーザー検索</a></p>
+            <form action="{{route('users.search') }}"method="GET">
+                <input type="text" name="keyword" placeholder="ユーザー名">
+                <button type="submit">ユーザー検索</button>
         </div>
     </div>
     <footer>

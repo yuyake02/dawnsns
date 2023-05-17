@@ -18,6 +18,7 @@ class FollowsController extends Controller
     {
         return view('follows.followerList');
     }
+
     //フォロー情報をデータベースに保存
     public function follow(User $user)
     {
@@ -27,7 +28,7 @@ class FollowsController extends Controller
             'follower' => auth()->user()->id,
         ]);
 
-        return back();
+        return redirect()->back();
     }
 
     //フォロー情報をデータベースから削除
@@ -39,6 +40,6 @@ class FollowsController extends Controller
 
         $follow->delete();
 
-        return back();
+        return redirect()->back();
     }
 }

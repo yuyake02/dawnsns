@@ -1,5 +1,7 @@
 @extends('layouts.login')
-<p>test</p>
+
 @section('content')
+
+  <h3>Follower list</h3>
 
 @endsection

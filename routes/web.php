@@ -34,10 +34,10 @@ Route::get('/top', 'PostsController@index')->name('top');
 
 Route::get('/profile', 'UsersController@profile')->name('profile');
 
-Route::get('/search', 'UsersController@index');
+Route::get('/users/search', 'UsersController@search')->name('users.search');
 
-Route::get('/follow-list', 'PostsController@index')->name('follow-list');
-Route::get('/follower-list', 'PostsController@index')->name('follower-list');
+Route::get('/follow-list', 'FollowsController@followList')->name('follow-list');
+Route::get('/follower-list', 'FollowsController@followerList')->name('follower-list');
 
 Route::post('/logout', 'Auth\loginController@logout')->name('logout');
 
@@ -50,7 +50,7 @@ Route::get('/post', 'PostController@index')->name('posts.index');
 Route::get('/user/{id}', [App\Http\Controllers\UsersController::class, 'show'])->name('user.show');
 //フォロー機能のルーティング
 Route::post('/follow/{user}', 'FollowsController@follow')->name('follow');
-Route::post('/unfollow/{user}', 'FollowsController@unfollow')->name('unfollow');
+Route::delete('/unfollow/{user}', 'FollowsController@unfollow')->name('unfollow');
 
 //投稿編集のルーティング
 Route::get('/posts/{id}edit', 'PostController@edit')->name('posts.edit');
