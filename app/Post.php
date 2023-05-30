@@ -14,14 +14,4 @@ class Post extends Model
         //Userモデルとのリレーションを定義し、投稿に紐づくユーザー情報を取得する
         return $this->belongsTo(User::class);
     }
-
-    //followerモデルとのリレーション設定
-    public function follows()
-    {
-        return $this->hasMany(Follow::class, 'follower');
-    }
-    public function followers()
-    {
-        return $this->hasMany(Follow::class, 'follow');
-    }
 }

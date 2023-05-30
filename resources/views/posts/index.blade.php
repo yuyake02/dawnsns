@@ -15,7 +15,7 @@
     <li style="text-align: right;">{{ $post->created_at }}</li>
 
     @if(isset($post->user))
-    <li><a href="{{ route('user.show', ["id" => $post->user_id]) }}"><img src="images/dawn.png"></a>{{ $post->user->username }}</li>
+    <li><a href="{{ route('users.show', ["id" => $post->user_id]) }}"><img src="images/dawn.png"></a>{{ $post->user->username }}</li>
     @endif
 
     <li>{{ $post->posts }}</li>

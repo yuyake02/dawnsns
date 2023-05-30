@@ -6,18 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Follow extends Model
 {
+    protected $primaryKey = [
+        'follow',
+        'follower'
+    ];
+
     protected $fillable = [
         'follow', 'follower'
     ];
-    //Userモデルとのリレーション設定
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'follow');
-    }
-    public function follower()
-    {
-        return $this->belongsTo(User::class, 'follower');
-    }
+
+    public $timestamps = false;
+    public $incrementing = false;
 
     //Postモデルとのリレーション設定
     public function posts()

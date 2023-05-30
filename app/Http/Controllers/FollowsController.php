@@ -9,7 +9,7 @@ use App\Follow;
 
 class FollowsController extends Controller
 {
-    //
+    //フォロー、フォロワーページ遷移
     public function followList()
     {
         return view('follows.followList');

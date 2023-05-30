@@ -36,11 +36,35 @@ class User extends Authenticatable
     //followerモデルとのリレーション設定
     public function follows()
     {
-        return $this->hasMany(Follow::class, 'follower');
+        return $this->belongsToMany(User::class, 'follow', 'follower_id', 'follow_id');
     }
     public function followers()
     {
-        return $this->hasMany(Follow::class, 'follow');
+        return $this->belongsToMany(User::class, 'follow', 'follow_id', 'follower_id');
+    }
+
+    // フォローする
+    public function follow($user_id)
+    {
+        return $this->follows()->attach($user_id);
+    }
+
+    // フォロー解除
+    public function unfollow($user_id)
+    {
+        return $this->follows()->detach($user_id);
+    }
+
+    // フォローしているか
+    public function isFollowing($user_id)
+    {
+        return (bool) $this->follows()->where('follow', $user_id)->first(['id']);
+    }
+
+    // フォローされているか
+    public function isFollowed($user_id)
+    {
+        return (bool) $this->followers()->where('follower', $user_id)->first(['id']);
     }
 
     //フォロワー数表示のためのメソッド
@@ -65,7 +89,7 @@ class User extends Authenticatable
         return $this->followingCount()->count();
     }
 
-    //　ユーザー検索機能のスコープメソッド
+    //　ユーザー検索機能のメソッド
     public function scopeSearch($query, $keyword)
     {
         return $query->where('username', 'like', "%{$keyword}%")

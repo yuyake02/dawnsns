@@ -9,11 +9,21 @@ use App\Post;
 
 class PostsController extends Controller
 {
-    //
     public function index()
     {
-        //投稿内容を高順表示
-        $posts = Post::orderBy('created_at', 'desc')->get();
+        // PostsとUsersテーブルを結合させてデータを取得する
+        $posts = DB::table('users')
+            ->join('posts', 'users.id', '=', 'posts.user_id')
+            ->select('posts.user_id', 'posts.id', 'users.username', 'users.id as user_id', 'posts.created_at')
+            ->get();
+        // ユーザー名を$name変数に格納
+        foreach ($posts as $post) {
+            $username = $post->username;
+            // $postオブジェクトのnameプロパティにユーザー名を代入
+            $post->username = $username;
+        }
+        $posts = Post::orderBy('created_at', 'desc')
+            ->get();
 
         return view('posts.index', ['posts' => $posts]);
     }

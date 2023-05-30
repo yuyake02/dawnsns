@@ -42,6 +42,7 @@
     <div id="row">
         <div id="container">
             @yield('content')
+            <hr style="border: none; border-top: 5px solid #D7D7D7;">
         </div>
         <div id="side-bar">
             <div id="confirm">
@@ -55,11 +56,10 @@
                     <p>フォロワー数</p>
                     <p>{{ Auth::user()->getFollowersCount() }}名</p>
                 </div>
-                <p class="btn"><a href="{{ route('follower-list')}}">フォロワーリスト</a></p>
+                <div class="search"><p class="btn"><a href="{{ route('follower-list')}}">フォロワーリスト</a></p>
+                </div>
             </div>
-            <form action="{{route('users.search') }}"method="GET">
-                <input type="text" name="keyword" placeholder="ユーザー名">
-                <button type="submit">ユーザー検索</button>
+                <p><a href="{{ route('users.search')}}">ユーザー検索</p>
         </div>
     </div>
     <footer>

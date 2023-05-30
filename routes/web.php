@@ -34,27 +34,28 @@ Route::get('/top', 'PostsController@index')->name('top');
 
 Route::get('/profile', 'UsersController@profile')->name('profile');
 
+//　検索機能
 Route::get('/users/search', 'UsersController@search')->name('users.search');
 
-Route::get('/follow-list', 'FollowsController@followList')->name('follow-list');
-Route::get('/follower-list', 'FollowsController@followerList')->name('follower-list');
-
+//　ログアウト
 Route::post('/logout', 'Auth\loginController@logout')->name('logout');
 
-//投稿機能のルーティング
-
+//　投稿機能
 Route::resource('posts', 'PostsController');
 Route::get('/post', 'PostController@index')->name('posts.index');
 
-//マイページ遷移のルーティング
-Route::get('/user/{id}', [App\Http\Controllers\UsersController::class, 'show'])->name('user.show');
-//フォロー機能のルーティング
-Route::post('/follow/{user}', 'FollowsController@follow')->name('follow');
-Route::delete('/unfollow/{user}', 'FollowsController@unfollow')->name('unfollow');
+//　フォロー機能
+Route::post('/users/{user}/follow', [UsersController::class, 'follow'])->name('follow');
+Route::delete('/users/{user}/unfollow', [UsersController::class, 'unfollow'])->name('unfollow');
+Route::get('/follow-list', 'FollowsController@followList')->name('follow-list');
+Route::get('/follower-list', 'FollowsController@followerList')->name('follower-list');
 
-//投稿編集のルーティング
+//　投稿編集
 Route::get('/posts/{id}edit', 'PostController@edit')->name('posts.edit');
 Route::put('/posts/{id}', 'PostController@update')->name('posts.update');
 
-//投稿削除のルーティング
+//　投稿削除
 Route::delete('/posts/{id}', 'PostController@destroy')->name('posts.destroy');
+
+//　マイページ表示
+Route::get('/users/{id}', [App\Http\Controllers\UsersController::class, 'show'])->name('users.show');
