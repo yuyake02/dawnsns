@@ -18,28 +18,4 @@ class FollowsController extends Controller
     {
         return view('follows.followerList');
     }
-
-    //フォロー情報をデータベースに保存
-    public function follow(User $user)
-    {
-
-        $follow = Follow::create([
-            'follow' => $user->id,
-            'follower' => auth()->user()->id,
-        ]);
-
-        return redirect()->back();
-    }
-
-    //フォロー情報をデータベースから削除
-    public function unfollow(User $user)
-    {
-        $follow = Follow::where('follow', $user->id)
-            ->where('follower', auth()->user()->id)
-            ->first();
-
-        $follow->delete();
-
-        return redirect()->back();
-    }
 }

@@ -42,20 +42,25 @@ Route::post('/logout', 'Auth\loginController@logout')->name('logout');
 
 //　投稿機能
 Route::resource('posts', 'PostsController');
-Route::get('/post', 'PostController@index')->name('posts.index');
+
+Route::get('/post', 'PostsController@index')->name('posts.index');
 
 //　フォロー機能
-Route::post('/users/{user}/follow', [UsersController::class, 'follow'])->name('follow');
-Route::delete('/users/{user}/unfollow', [UsersController::class, 'unfollow'])->name('unfollow');
+Route::post('/users/{user}/follow', 'UsersController@follow')->name('follow');
+
+Route::delete('/users/{user}/unfollow', 'UsersController@unfollow')->name('unfollow');
+
 Route::get('/follow-list', 'FollowsController@followList')->name('follow-list');
+
 Route::get('/follower-list', 'FollowsController@followerList')->name('follower-list');
 
 //　投稿編集
-Route::get('/posts/{id}edit', 'PostController@edit')->name('posts.edit');
-Route::put('/posts/{id}', 'PostController@update')->name('posts.update');
+Route::get('/posts/{id}edit', 'PostsController@edit')->name('posts.edit');
+
+Route::put('/posts/{id}', 'PostsController@update')->name('posts.update');
 
 //　投稿削除
-Route::delete('/posts/{id}', 'PostController@destroy')->name('posts.destroy');
+Route::delete('/posts/{id}', 'PostsController@destroy')->name('posts.destroy');
 
 //　マイページ表示
-Route::get('/users/{id}', [App\Http\Controllers\UsersController::class, 'show'])->name('users.show');
+Route::get('/users/{id}', 'UsersController@show')->name('users.show');

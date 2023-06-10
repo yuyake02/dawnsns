@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\User;
+use App\Follow;
 
 class UsersController extends Controller
 {
@@ -30,7 +30,7 @@ class UsersController extends Controller
     {
         $user = User::find($id);
         $user_flg = $request->path();
-        $user_flg = preg_replace('/[^0-10000]/', '', $user_flg);
+        $user_flg = preg_replace('/[^0-9]/', '', $user_flg);
 
         return view('users.show', ['user' => $user, 'user_flg' => $user_flg]);
     }
@@ -38,24 +38,36 @@ class UsersController extends Controller
     // フォローする
     public function follow(User $user)
     {
-        // フォローしているか
-        $follower = auth()->user();
-        $is_following = $follower->isFollowing($user->id);
-        if (!$is_following) {
-            $follower->follow($user->id);
-            return back();
+        $followerId = auth()->user()->id;
+
+        // すでにフォローしているかチェック
+        // $isFollowing = Follow::where('follow', $user->id)
+        //     ->where('follower', $followerId)
+        //     ->exists();
+
+        if (!Auth::user()->isFollowing($user->id)) {
+            // フォローしていない場合のみフォローを作成
+            Follow::create([
+                'follow' => $user->id,
+                'follower' => $followerId,
+            ]);
         }
+
+        return redirect()->back();
     }
 
     // フォロー解除
     public function unfollow(User $user)
     {
-        $follower = auth()->user();
-        // フォローしているか
-        $is_following = $follower->isFollowing($user->id);
-        if ($is_following) {
-            // フォローしていなければフォロー解除する
-            $follower->unfollow($user->id);
+        $followerId = auth()->user()->id;
+
+        if (Auth::user()->isFollowing($user->id)) {
+
+            Follow::where('follow', $user->id)
+                ->where('follower', $followerId)
+                ->delete();
         }
+
+        return redirect()->back();
     }
 }

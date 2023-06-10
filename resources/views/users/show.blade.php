@@ -5,6 +5,7 @@
   @if(Auth::id() != $user_flg)
   @if(Auth::user()->isFollowing($user->id))
   <form action="{{ route('unfollow', ['user' => $user->id]) }}" method="POST">
+
     {{ csrf_field() }}
     {{ method_field('DELETE')}}
 
@@ -19,6 +20,6 @@
   @endif
   @endif
 </div>
-
+<p>テスト</p>
 
 @endsection
