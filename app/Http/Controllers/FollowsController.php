@@ -12,10 +12,14 @@ class FollowsController extends Controller
     //フォロー、フォロワーページ遷移
     public function followList()
     {
-        return view('follows.followList');
+        $followingUsers = Auth::user()->followingCount;
+
+        return view('follows.followList', compact('followingUsers'));
     }
     public function followerList()
     {
-        return view('follows.followerList');
+        $followersUsers = Auth::user()->followersCount;
+
+        return view('follows.followerList', compact('followersUsers'));
     }
 }

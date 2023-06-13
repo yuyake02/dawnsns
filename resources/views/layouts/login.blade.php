@@ -42,7 +42,6 @@
     <div id="row">
         <div id="container">
             @yield('content')
-            <hr style="border: none; border-top: 5px solid #D7D7D7;">
         </div>
         <div id="side-bar">
             <div id="confirm">
