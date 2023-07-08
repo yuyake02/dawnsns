@@ -32,7 +32,9 @@ Route::get('/added', 'Auth\RegisterController@added');
 //ログイン中のページ
 Route::get('/top', 'PostsController@index')->name('top');
 
-Route::get('/profile', 'UsersController@profile')->name('profile');
+//プロフィール中のページ
+Route::get('/users/profile', 'UsersController@profile')->name('profile');
+Route::post('/update-profile', 'UsersController@updateProfile')->name('user.update-profile');
 
 //　検索機能
 Route::get('/users/search', 'UsersController@search')->name('users.search');
