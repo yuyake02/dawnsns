@@ -22,10 +22,13 @@ class PostsController extends Controller
             // $postオブジェクトのnameプロパティにユーザー名を代入
             $post->username = $username;
         }
+
+        $user = Auth::user();
+
         $posts = Post::orderBy('created_at', 'desc')
             ->get();
 
-        return view('posts.index', ['posts' => $posts]);
+        return view('posts.index', ['posts' => $posts], compact('user'));
     }
 
     //新しい投稿フォームを表示する

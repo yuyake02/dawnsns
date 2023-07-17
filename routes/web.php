@@ -35,6 +35,7 @@ Route::get('/top', 'PostsController@index')->name('top');
 //プロフィール中のページ
 Route::get('/users/profile', 'UsersController@profile')->name('profile');
 Route::post('/update-profile', 'UsersController@updateProfile')->name('user.update-profile');
+Route::post('/profile/update', 'UsersController@updateProfile')->name('profile.update');
 
 //　検索機能
 Route::get('/users/search', 'UsersController@search')->name('users.search');

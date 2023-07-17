@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'mail', 'password', 'images'
+        'username', 'mail', 'password', 'images', 'bio'
     ];
 
     /**
@@ -93,5 +93,11 @@ class User extends Authenticatable
     public function scopeSearch($query, $keyword)
     {
         return $query->where('username', 'like', "%{$keyword}%");
+    }
+
+    // ハッシュ化されたパスワードの教示
+    public function getDisplayPasswordAttribute()
+    {
+        return '●●●●●●●●';
     }
 }

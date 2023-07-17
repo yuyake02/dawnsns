@@ -9,37 +9,6 @@ use App\Follow;
 
 class UsersController extends Controller
 {
-    public function updateProfile(Request $request)
-    {
-        if ($request->hasFile('images')) {
-            $image = $request->file('images');
-            $filename = time() . '_' . $image->getClientOriginalName();
-            $image->storeAs('public/images', $filename);
-
-            $user = Auth::user();
-            $user->images = $filename;
-            $user->save();
-
-            $user->update([
-                'username' => $request->input('username'),
-                'mail' => $request->input('mail'),
-                'password' => bcrypt($request->input('newpassword')),
-                'bio' => $request->input('bio')
-            ]);
-
-            return redirect()->back()->with('success', '更新完了');
-        }
-
-        return redirect()->back()->with('error', '更新失敗');
-    }
-
-    public function Profile()
-    {
-        $user = Auth::user();
-
-        return view('users.profile', compact('user'));
-    }
-
     //　ユーザー検索
     public function search(Request $request)
     {
@@ -95,5 +64,44 @@ class UsersController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    //　プロフィールアップデート
+    public function updateProfile(Request $request)
+    {
+        if ($request->hasFile('images')) {
+            $image = $request->file('images');
+            $filename = time() . '_' . $image->getClientOriginalName();
+            $image->storeAs('public/images', $filename);
+
+            $user = Auth::user();
+            $user->images = $filename;
+
+            if ($request->input('newPassword')) {
+                $user->update([
+                    'username' => $request->input('username'),
+                    'mail' => $request->input('mail'),
+                    'password' => bcrypt($request->input('newPassword')),
+                    'bio' => $request->input('bio')
+                ]);
+            } else {
+                $user->update([
+                    'username' => $request->input('username'),
+                    'mail' => $request->input('mail'),
+                    'bio' => $request->input('bio')
+                ]);
+            }
+
+            return redirect()->back()->with('success', '更新完了');
+        }
+
+        return redirect()->back()->with('error', '更新失敗');
+    }
+
+    public function profile()
+    {
+        $user = Auth::user();
+
+        return view('users.profile', compact('user'));
     }
 }

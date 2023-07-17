@@ -4,7 +4,13 @@
 <form method="POST" action="{{ route('posts.store') }}">
     @csrf
     <label for="posts"></label>
-    <img src="images/dawn.png">
+
+    @if($user->images != 'dawn.png')
+    <img src="{{ asset('storage/images/' . $user->images) }}" width="50" height="50">
+    @else
+    <img src="{{ asset('/images/dawn.png') }}" width="50" height="50">
+    @endif
+
     <textarea id="posts" name="posts" placeholder="何をつぶやこうか...?" row="4"></textarea>
 
     <button type="submit"><img src="images/post.png"></button>
@@ -12,11 +18,19 @@
 <hr style="border: none; border-top: 5px solid #D7D7D7;">
 <ul>
     @foreach($posts as $post)
+
     <li style="text-align: right;">{{ $post->created_at }}</li>
 
-    @if(isset($post->user))
-    <li><a href="{{ route('users.show', ["id" => $post->user_id]) }}"><img src="images/dawn.png"></a>{{ $post->user->username }}</li>
-    @endif
+    <li>
+        <a href="{{ route('users.show', ["id" => $post->user_id]) }}">
+            @if($post->user->images != 'dawn.png')
+            <img src="{{ asset('storage/images/' . $post->user->images) }}" width="50" height="50">
+            @else
+            <img src="{{ asset('/images/dawn.png') }}" width="50" height="50">
+            @endif
+        </a>
+        {{ $post->user->username }}
+    </li>
 
     <li>{{ $post->posts }}</li>
 
