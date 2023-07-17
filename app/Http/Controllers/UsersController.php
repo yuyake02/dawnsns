@@ -66,38 +66,33 @@ class UsersController extends Controller
         return redirect()->back();
     }
 
-    //　プロフィールアップデート
+    //　プロフィール更新用のメソッド
     public function updateProfile(Request $request)
     {
+        $user = Auth::user();
+
         if ($request->hasFile('images')) {
             $image = $request->file('images');
             $filename = time() . '_' . $image->getClientOriginalName();
             $image->storeAs('public/images', $filename);
 
-            $user = Auth::user();
             $user->images = $filename;
-
-            if ($request->input('newPassword')) {
-                $user->update([
-                    'username' => $request->input('username'),
-                    'mail' => $request->input('mail'),
-                    'password' => bcrypt($request->input('newPassword')),
-                    'bio' => $request->input('bio')
-                ]);
-            } else {
-                $user->update([
-                    'username' => $request->input('username'),
-                    'mail' => $request->input('mail'),
-                    'bio' => $request->input('bio')
-                ]);
-            }
-
-            return redirect()->back()->with('success', '更新完了');
         }
 
-        return redirect()->back()->with('error', '更新失敗');
+        $user->username = $request->input('username');
+        $user->mail = $request->input('mail');
+        $user->bio = $request->input('bio');
+
+        if ($request->filled('newPassword')) {
+            $user->password = bcrypt($request->input('newPassword'));
+        }
+
+        $user->save();
+
+        return redirect()->back()->with('success', '更新完了');
     }
 
+    //　ユーザー情報を$user変数に代入してビューへ渡す
     public function profile()
     {
         $user = Auth::user();

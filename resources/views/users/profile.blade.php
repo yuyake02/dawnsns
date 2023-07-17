@@ -18,7 +18,7 @@
     <dt>Password</dt>
     <dd><input type="text" name="password" value="{{ $user->display_password }}" readonly></dd>
     <dt>NewPassword</dt>
-    <dd><input type="password" name="password" value="{{ $user->display_password }}"></dd>
+    <dd><input type="password" name="newPassword" value="{{ $user->display_password }}"></dd>
     <dt>Bio</dt>
     <dd><input type="text" name="bio" value="{{ Auth::user()->bio }}"></dd>
     <dt>Icon Image</dt>
