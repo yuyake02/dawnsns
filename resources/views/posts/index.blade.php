@@ -35,7 +35,44 @@
     <li>{{ $post->posts }}</li>
 
     <li style="display: flex; justify-content:flex-end; text-align: right;  border-bottom: 1px solid #D7D7D7; margin-bottom: 50px; padding: 30px;">
-        <a href="{{ route('posts.edit', ['id' => $post->id]) }}"><img src="images/edit.png"></a>
+
+        <form action="{{ route('posts.update', $post->id) }}" method="post">
+            @csrf
+            @method('PUT')
+            <div class="form-group">
+                <textarea name="content" id="posts"  placeholder="{{ $post->posts }}" rows="5" class="form-control">{{ $post->posts }}</textarea>
+            </div>
+            <button type="submit" class="btn-primary"><img src="{{ asset('images/edit.png') }}"></button>
+        </form>
+
+        <!-- ポップアップモーダル -->
+        <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmationModalLabel">確認</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">更新しますか？</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-secondary" data-dismiss="modal">キャンセル</button>
+                        <button type="button" class="btn-primary" id="confirmUpdate"><img src="{{ asset('images/edit.png') }}"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ポップアップモーダル表示用JavaScript -->
+        <script>
+            $(document).ready(function(){
+                $('#confirmUpdate').on('click', function(){
+                    $('#confirmationModal').modal('show');
+                });
+
+                $('#confirmationModal').on('click', '#confirmUpdate', function(){
+                    $('form').submit();
+                });
+            });
+        </script>
 
         <form action="{{ route('posts.destroy', ['id' => $post->id]) }}" method="POST" onsubmit="return confirm('このつぶやきを削除します。よろしいでしょうか？')";>
             @csrf

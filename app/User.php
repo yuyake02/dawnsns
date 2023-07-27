@@ -27,13 +27,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    //Postモデルとのリレーション設定
+    //　Postモデルとのリレーション設定
     public function posts()
     {
         return $this->hasMany(Post::class);
     }
 
-    //followerモデルとのリレーション設定
+    //　followerモデルとのリレーション設定
     public function follows()
     {
         return $this->belongsToMany(User::class, 'follows', 'follower', 'follow');
@@ -67,19 +67,19 @@ class User extends Authenticatable
         return (bool) $this->followers()->where('follower', $user_id)->count();
     }
 
-    //フォロワー数表示のためのメソッド
+    //　フォロワー数表示のためのメソッド
     public function followersCount()
     {
         return $this->belongsToMany(User::class, 'follows', 'follow', 'follower');
     }
 
-    //フォロー数表示のためのメソッド
+    //　フォロー数表示のためのメソッド
     public function followingCount()
     {
         return $this->belongsToMany(User::class, 'follows', 'follower', 'follow');
     }
 
-    //フォローフォロワー数を取得するヘルパーメソッド
+    //　フォローフォロワー数を取得するヘルパーメソッド
     public function getFollowersCount()
     {
         return $this->followersCount()->count();
@@ -95,7 +95,7 @@ class User extends Authenticatable
         return $query->where('username', 'like', "%{$keyword}%");
     }
 
-    // ハッシュ化されたパスワードの教示
+    //　ハッシュ化されたパスワードの教示
     public function getDisplayPasswordAttribute()
     {
         return '●●●●●●●●';

@@ -72,15 +72,10 @@ class PostsController extends Controller
     //指定された投稿を更新
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'posts' => 'required',
-        ]);
-
         $post = Post::findOrFail($id);
-        $post->body = $validatedData['posts'];
-        $post->save();
+        $post->update($request->all());
 
-        return redirect('posts.show', ['id' => $post->id]);
+        return redirect('posts.edit', $post->id);
     }
 
     //指定された投稿を削除

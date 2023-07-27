@@ -4,7 +4,7 @@
 
 <div class="user-search" style="display: flex;">
   <form action="{{ route('users.search') }}" method="GET"><input type="text" name="keyword" placeholder="ユーザー名"></form>
-  <button>検索する</button>
+  <button><img src="/images/search.jpeg" width="41" height="36"></button>
 </div>
 
 <hr style="border: none; border-top: 5px solid #D7D7D7;">

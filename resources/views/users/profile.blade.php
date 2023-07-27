@@ -10,15 +10,15 @@
 
 <form action="{{ route('user.update-profile') }}" enctype="multipart/form-data" method="post">
   @csrf
-  <dl class="ProfileUpdate">
+  <dl class="profileUpdate">
     <dt>UserName</dt>
     <dd><input type="text" name="username" value="{{ Auth::user()->username }}"></dd>
     <dt>MailAddress</dt>
     <dd><input type="text" name="mail" value="{{ Auth::user()->mail }}"></dd>
     <dt>Password</dt>
-    <dd><input type="text" name="password" value="{{ $user->display_password }}" readonly></dd>
+    <dd><input type="text" name="password" placeholder="{{ $user->display_password }}" readonly></dd>
     <dt>NewPassword</dt>
-    <dd><input type="password" name="newPassword" value="{{ $user->display_password }}"></dd>
+    <dd><input type="password" name="newPassword" placeholder="{{ $user->display_password }}"></dd>
     <dt>Bio</dt>
     <dd><input type="text" name="bio" value="{{ Auth::user()->bio }}"></dd>
     <dt>Icon Image</dt>
@@ -26,5 +26,11 @@
   </dl>
   <input type="submit" name="profileUpdate" value="更新">
 </form>
+
+@if(session('success'))
+<div class="alert alert-sucess">
+  {{ session('success') }}
+</div>
+@endif
 
 @endsection

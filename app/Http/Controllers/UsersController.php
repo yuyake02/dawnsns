@@ -89,7 +89,7 @@ class UsersController extends Controller
 
         $user->save();
 
-        return redirect()->back()->with('success', '更新完了');
+        return redirect()->back()->with('success', 'プロフィールを更新しました！');
     }
 
     //　ユーザー情報を$user変数に代入してビューへ渡す
