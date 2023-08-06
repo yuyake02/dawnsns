@@ -57,10 +57,7 @@ Route::get('/follow-list', 'FollowsController@followList')->name('follow-list');
 
 Route::get('/follower-list', 'FollowsController@followerList')->name('follower-list');
 
-//　投稿編集
-Route::get('/posts/{id}edit', 'PostsController@edit')->name('posts.edit');
-
-Route::put('/posts/{id}', 'PostsController@update')->name('posts.update');
+Route::post('/posts/update', 'PostsController@update')->name('posts.update');
 
 //　投稿削除
 Route::delete('/posts/{id}', 'PostsController@destroy')->name('posts.destroy');

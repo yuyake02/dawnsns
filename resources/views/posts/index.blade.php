@@ -1,85 +1,90 @@
 @extends('layouts.login')
 
 @section('content')
-<form method="POST" action="{{ route('posts.store') }}">
-    @csrf
-    <label for="posts"></label>
+    <form method="POST" action="{{ route('posts.store') }}">
+        @csrf
+        <label for="posts"></label>
 
-    @if($user->images != 'dawn.png')
-    <img src="{{ asset('storage/images/' . $user->images) }}" width="50" height="50">
-    @else
-    <img src="{{ asset('/images/dawn.png') }}" width="50" height="50">
-    @endif
-
-    <textarea id="posts" name="posts" placeholder="何をつぶやこうか...?" row="4"></textarea>
-
-    <button type="submit"><img src="images/post.png"></button>
-</form>
-<hr style="border: none; border-top: 5px solid #D7D7D7;">
-<ul>
-    @foreach($posts as $post)
-
-    <li style="text-align: right;">{{ $post->created_at }}</li>
-
-    <li>
-        <a href="{{ route('users.show', ["id" => $post->user_id]) }}">
-            @if($post->user->images != 'dawn.png')
-            <img src="{{ asset('storage/images/' . $post->user->images) }}" width="50" height="50">
-            @else
+        @if ($user->images != 'dawn.png')
+            <img src="{{ asset('storage/images/' . $user->images) }}" width="50" height="50">
+        @else
             <img src="{{ asset('/images/dawn.png') }}" width="50" height="50">
-            @endif
-        </a>
-        {{ $post->user->username }}
-    </li>
+        @endif
 
-    <li>{{ $post->posts }}</li>
+        <textarea id="posts" class="post-form"name="posts" placeholder="何をつぶやこうか...?" row="4"></textarea>
 
-    <li style="display: flex; justify-content:flex-end; text-align: right;  border-bottom: 1px solid #D7D7D7; margin-bottom: 50px; padding: 30px;">
+        <button type="submit"><img src="images/post.png"></button>
+    </form>
+    <hr style="border: none; border-top: 5px solid #D7D7D7;">
+    <ul>
+        @foreach ($posts as $post)
+            <li style="text-align: right;">{{ $post->created_at }}</li>
 
-        <form action="{{ route('posts.update', $post->id) }}" method="post">
-            @csrf
-            @method('PUT')
-            <div class="form-group">
-                <textarea name="content" id="posts"  placeholder="{{ $post->posts }}" rows="5" class="form-control">{{ $post->posts }}</textarea>
-            </div>
-            <button type="submit" class="btn-primary"><img src="{{ asset('images/edit.png') }}"></button>
-        </form>
+            <li>
+                <a href="{{ route('users.show', ['id' => $post->user_id]) }}">
+                    @if ($post->user->images != 'dawn.png')
+                        <img src="{{ asset('storage/images/' . $post->user->images) }}" width="50" height="50">
+                    @else
+                        <img src="{{ asset('/images/dawn.png') }}" width="50" height="50">
+                    @endif
+                </a>
+                {{ $post->user->username }}
+            </li>
 
-        <!-- ポップアップモーダル -->
-        <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="confirmationModalLabel">確認</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">更新しますか？</div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-secondary" data-dismiss="modal">キャンセル</button>
-                        <button type="button" class="btn-primary" id="confirmUpdate"><img src="{{ asset('images/edit.png') }}"></button>
-                    </div>
+            <li>{{ $post->posts }}</li>
+
+            <li
+                style="display: flex; justify-content:flex-end; text-align: right;  border-bottom: 1px solid #D7D7D7; margin-bottom: 50px; padding: 30px;">
+
+                <div class="post-edit">
+                    <button class="edit-modal" data-id="{{ $post->id }}">
+                        <img src="{{ asset('images/edit.png') }}" alt="edit">
+                    </button>
                 </div>
-            </div>
-        </div>
-        <!-- ポップアップモーダル表示用JavaScript -->
-        <script>
-            $(document).ready(function(){
-                $('#confirmUpdate').on('click', function(){
-                    $('#confirmationModal').modal('show');
-                });
 
-                $('#confirmationModal').on('click', '#confirmUpdate', function(){
-                    $('form').submit();
-                });
-            });
-        </script>
+                <div class="modal" id="modal{{ $post->id }}">
+                    <div class="modal-edit">
+                        <div class="inner-content">
+                            <form action="{{ route('posts.update') }}" method="post" id="updateFome">
+                                @csrf
+                                <div class="form-group">
+                                    <textarea name="posts" id="modalPosts" placeholder="{{ $post->posts }}" rows="5" class="form-edit">{{ $post->posts }}</textarea>
+                                    <input type="hidden" name="id" value="{{ $post->id }}">
+                                </div>
+                                <button type="submit" class="form-submit"><img
+                                        src="{{ asset('images/edit.png') }}"></button>
+                            </form>
+                        </div>
+                    </div>
+                    <script>
+                        $(function() {
+                            $('.edit-modal').on('click', function() {
+                                var postId = $(this).data('id');
+                                var postText = $('#post_' + postId).text().trim();
 
-        <form action="{{ route('posts.destroy', ['id' => $post->id]) }}" method="POST" onsubmit="return confirm('このつぶやきを削除します。よろしいでしょうか？')";>
-            @csrf
-            @method('DELETE')
-            <button type="submit"><img src="images/trash.png"></button>
-        </form>
-    </li>
-    @endforeach
-</ul>
+                                $('#modalPosts').val(postText);
+                                $('#modal' + postId).fadeIn();
+                            });
+
+                            // モーダル外部クリック時のイベント
+                            window.onclick = function(event) {
+                                if (event.target.classList.contains('modal')) {
+                                    event.target.style.display = 'none';
+                                }
+                            };
+                        });
+                    </script>
+                </div>
+
+                <div class="delete">
+                    <form action="{{ route('posts.destroy', ['id' => $post->id]) }}" method="POST"
+                        onsubmit="return confirm('このつぶやきを削除します。よろしいでしょうか？')";>
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"><img src="images/trash.png"></button>
+                    </form>
+                </div>
+            </li>
+        @endforeach
+    </ul>
 @endsection
