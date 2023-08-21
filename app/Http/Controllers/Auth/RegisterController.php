@@ -49,10 +49,30 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'username' => 'required|string|max:255',
-            'mail' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:4|confirmed',
-        ]);
+            'username' => 'required|string|min:4|max:12',
+            'mail' => 'required|string|email|min:4|unique:users',
+            'password' => 'required|string|min:4|max:12|confirmed|regex:/^[a-zA-Z0-9]+$/',
+            'password_confirmation' => 'required_with:password|string|min:4|max:12|regex:/^[a-zA-Z0-9]+$/',
+        ], [
+            'username.required' => '名前は必須項目です',
+            'username.min' => '名前は4文字以上12文字以下で入力してください',
+            'username.max' => '名前は12文字以下で入力してください',
+            'mail.required' => 'メールアドレスは必須項目です',
+            'mail.email' => 'メールアドレス形式で入力してください',
+            'mail.min' => 'メールアドレスは4文字以上12文字以下で入力してください',
+            'mail.max' => 'メールアドレスは12文字以下で入力してください',
+            'mail.unique' => 'すでに登録されています',
+            'password.required' => 'パスワードは必須項目です',
+            'password.confirmed' => 'パスワードが一致していません',
+            'password.min' => 'パスワードは4文字以上12文字以下で入力してください',
+            'password.max' => 'パスワードは12文字以下で入力してください',
+            'password.regex' => 'パスワードは英数字のみで入力してください',
+            'password_confirmation.required_with' => '入力されたパスワードと相違しています',
+            'password_confirmation.string' => 'パスワードの確認は必須項目です',
+            'password_confirmation.min' => 'パスワードは4文字以上で入力してください',
+            'password_confirmation.max' => 'パスワードは12文字以下で入力してください',
+            'password_confirmation.regex' => 'パスワードは英数字のみで入力してください',
+        ])->validate();
     }
 
     /**
@@ -80,6 +100,7 @@ class RegisterController extends Controller
         if ($request->isMethod('post')) {
             $data = $request->input();
             $request->session()->put('username', $data['username']);
+            $this->validator($data);
             $this->create($data);
             return redirect('added');
         }

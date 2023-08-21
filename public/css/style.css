@@ -82,3 +82,17 @@ header {
     border: 1px solid #6C6C6C;
     border-radius: 5px;
 }
+
+input {
+    background: #F2F2F2 0% 0% no-repeat padding-box;
+    border: 1px solid #6C6C6C;
+}
+
+ˇ .users-profile {
+    display: flex;
+    align-items: center;
+}
+
+.error-message {
+    color: red;
+}

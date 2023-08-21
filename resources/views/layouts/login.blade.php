@@ -22,7 +22,6 @@
     <link rel="apple-touch-icon-precomposed" href="画像のURL" />
     <!-- jQueryの読み込み -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 </head>
 
 <body>

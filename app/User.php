@@ -95,7 +95,7 @@ class User extends Authenticatable
         return $query->where('username', 'like', "%{$keyword}%");
     }
 
-    //　ハッシュ化されたパスワードの教示
+    //　ハッシュ化されたパスワード
     public function getDisplayPasswordAttribute()
     {
         return '●●●●●●●●';

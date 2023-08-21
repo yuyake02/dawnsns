@@ -3,8 +3,11 @@
 @section('content')
     <div class="user-search" style="display: flex;">
         <form action="{{ route('users.search') }}" method="GET"><input type="text" name="keyword" placeholder="ユーザー名">
+            <button><img src="/images/search.jpeg" width="41" height="36"></button>
+            @if ($keyword)
+                <p>検索ワード:{{ $keyword }}</p>
+            @endif
         </form>
-        <button><img src="/images/search.jpeg" width="41" height="36"></button>
     </div>
 
     <hr style="border: none; border-top: 5px solid #D7D7D7;">

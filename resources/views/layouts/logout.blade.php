@@ -24,7 +24,6 @@
 <body>
     <header>
         <h1><img src="images/main_logo.png"></h1>
-        <p>Social Network Service</p>
     </header>
     <div id="container">
         @yield('content')

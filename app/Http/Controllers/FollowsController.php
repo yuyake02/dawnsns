@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\User;
-use App\Follow;
+use App\Post;
 
 class FollowsController extends Controller
 {
@@ -14,12 +12,19 @@ class FollowsController extends Controller
     {
         $followingUsers = Auth::user()->followingCount;
 
-        return view('follows.followList', compact('followingUsers'));
+        $posts = Post::orderBy('created_at', 'desc')
+            ->get();
+
+
+        return view('follows.followList', compact('followingUsers'), ['posts' => $posts]);
     }
     public function followerList()
     {
         $followersUsers = Auth::user()->followersCount;
 
-        return view('follows.followerList', compact('followersUsers'));
+        $posts = Post::orderBy('created_at', 'desc')
+            ->get();
+
+        return view('follows.followerList', compact('followersUsers', 'posts'));
     }
 }
