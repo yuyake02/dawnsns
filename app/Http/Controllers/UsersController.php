@@ -69,7 +69,7 @@ class UsersController extends Controller
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|min:4|max:12',
             'mail' => 'required|string|email|min:4',
-            'images' => 'nullable|image|mimes:jpeg,png,jpg,gif|regex:/^[a-zA-Z0-9]+$/',
+            'images' => 'nullable|image|mimes:jpeg,png,jpg,gif|mimes:jpeg,png,jpg,gif,svg,bmp',
             'bio' => 'nullable|string|max:200',
             'newPassword' => 'nullable|string|min:4|max:12|regex:/^[a-zA-Z0-9]+$/',
         ], [
@@ -81,7 +81,7 @@ class UsersController extends Controller
             'mail.email' => 'メールアドレスの形式が正しくありません',
             'images.image' => '画像を選択してください',
             'images.regex' => 'ファイル名は英数字のみで指定してください',
-            'images.mimes' => '画像はjpeg, png, jpg, gif形式のいずれかでアップロードしてください',
+            'images.mimes' => '画像はjpeg, png, jpg, gif, bmp, svg形式のいずれかでアップロードしてください',
             'bio.max' => '自己紹介は200文字以下で入力してください',
             'newPassword.min' => '新しいパスワードは4文字以上で入力してください',
             'newPassword.max' => '新しいパスワードは12文字以下で入力してください',

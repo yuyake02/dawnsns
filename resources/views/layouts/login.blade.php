@@ -3,8 +3,6 @@
 
 <head>
     <meta charset="utf-8" />
-    <!-- reset.css destyle -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css" />
     <!--IEブラウザ対策-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="ページの内容を表す文章" />
@@ -28,20 +26,22 @@
     <header>
         <div id="head">
             <h1><a href="/top"><img src="{{ asset('images/main_logo.png') }} "></a></h1>
-            <img class="user_img" src="{{ asset('images/dawn.png') }}">
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">{{ auth()->user()->username }}さん</button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="{{ route('top') }}">HOME</a>
-                    <a class="dropdown-item" href="{{ route('profile') }}">プロフィール編集</a>
-                    <a class="dropdown-item" href="{{ route('logout') }}"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
+            <div class="menu-list">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">{{ auth()->user()->username }}さん</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{ route('top') }}">HOME</a>
+                        <a class="dropdown-item" href="{{ route('profile') }}">プロフィール編集</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
+                    </div>
                 </div>
+                <img class="user-image" src="{{ asset('images/dawn.png') }}">
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </div>
         </div>
     </header>

@@ -3,17 +3,17 @@
 @section('content')
     <h1>Follow list</h1>
 
-    @foreach ($followingUsers as $user)
-        <div class="followUser">
-            <a href="{{ route('users.show', ['id' => $user->id]) }}">
+    <div class="follow-user">
+        @foreach ($followingUsers as $user)
+            <a href="{{ route('users.show', ['id' => $user->id]) }}" class="user-image">
                 @if ($user->images != 'dawn.png')
                     <img src="{{ asset('storage/images/' . $user->images) }}" width="50" height="50">
                 @else
                     <img src="{{ asset('/images/dawn.png') }}" width="50" height="50">
                 @endif
             </a>
-        </div>
-    @endforeach
+        @endforeach
+    </div>
 
     <hr style="border: none; border-top: 5px solid #D7D7D7;">
 
