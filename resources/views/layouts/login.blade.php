@@ -7,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="description" content="ページの内容を表す文章" />
     <title></title>
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <!--スマホ,タブレット対応-->
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <!--サイトのアイコン指定-->
@@ -18,24 +18,30 @@
     <link rel="icon" href="画像URL" sizes="62x62" type="image/png" />
     <!--iphoneのアプリアイコン指定-->
     <link rel="apple-touch-icon-precomposed" href="画像のURL" />
-    <!--OGPタグ/twitterカード-->
+    <!-- jQueryの読み込み -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
     <header>
         <div id="head">
-            <h1><a href="/top"><img src="images/main_logo.png"></a></h1>
-            <img class="user_img" src="images/dawn.png">
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ auth()->user()->username }}さん</button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="{{ route('top') }}">HOME</a>
-                    <a class="dropdown-item" href="{{ route('profile') }}">プロフィール編集</a>
-                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
+            <h1><a href="/top"><img src="{{ asset('images/main_logo.png') }} "></a></h1>
+            <div class="menu-list">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">{{ auth()->user()->username }}さん</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{ route('top') }}">HOME</a>
+                        <a class="dropdown-item" href="{{ route('profile') }}">プロフィール編集</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
+                    </div>
                 </div>
+                <img class="user-image" src="{{ asset('images/dawn.png') }}">
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </div>
         </div>
     </header>
@@ -46,24 +52,25 @@
         <div id="side-bar">
             <div id="confirm">
                 <p>{{ auth()->user()->username }}さんの</p>
-                <div>
+                <div class="following-count">
                     <p>フォロー数</p>
-                    <p>〇〇名</p>
+                    <p>{{ Auth::user()->getFollowingCount() }}名</p>
                 </div>
-                <p class="btn"><a href="">フォローリスト</a></p>
-                <div>
+                <p class="btn"><a href="{{ route('follow-list') }}">フォローリスト</a></p>
+                <div class="followers-count">
                     <p>フォロワー数</p>
-                    <p>〇〇名</p>
+                    <p>{{ Auth::user()->getFollowersCount() }}名</p>
                 </div>
-                <p class="btn"><a href="">フォロワーリスト</a></p>
+                <div class="search">
+                    <p class="btn"><a href="{{ route('follower-list') }}">フォロワーリスト</a></p>
+                </div>
             </div>
-            <p class="btn"><a href="">ユーザー検索</a></p>
+            <p><a href="{{ route('users.search') }}">ユーザー検索</p>
         </div>
     </div>
     <footer>
     </footer>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>

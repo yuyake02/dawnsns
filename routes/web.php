@@ -32,28 +32,35 @@ Route::get('/added', 'Auth\RegisterController@added');
 //ログイン中のページ
 Route::get('/top', 'PostsController@index')->name('top');
 
-Route::get('/profile', 'UsersController@profile')->name('profile');
+//プロフィール中のページ
+Route::get('/users/profile', 'UsersController@profile')->name('profile');
+Route::post('/update-profile', 'UsersController@updateProfile')->name('user.update-profile');
+Route::post('/profile/update', 'UsersController@updateProfile')->name('profile.update');
 
-Route::get('/search', 'UsersController@index');
+//　検索機能
+Route::get('/users/search', 'UsersController@search')->name('users.search');
 
-Route::get('/follow-list', 'PostsController@index');
-Route::get('/follower-list', 'PostsController@index');
-
+//　ログアウト
 Route::post('/logout', 'Auth\loginController@logout')->name('logout');
 
-//投稿機能のルーティング
-
+//　投稿機能
 Route::resource('posts', 'PostsController');
-Route::get('/post', 'PostController@index')->name('posts.index');
 
-//マイページ遷移のルーティング
-Route::get('/user/{id}', [App\Http\Controllers\UsersController::class, 'show'])->name('user.show');
-//フォロー機能のルーティング
-Route::post('/follow/{user}', 'FollowsController@follow')->name('follow');
-Route::post('/unfollow/{user}', 'FollowsController@unfollow')->name('unfollow');
+Route::get('/post', 'PostsController@index')->name('posts.index');
 
-//投稿編集のルーティング
-Route::get('/posts/{id}edit', 'PostController@edit')->name('posts.edit');
+//　フォロー機能
+Route::post('/users/{user}/follow', 'UsersController@follow')->name('follow');
 
-//投稿削除のルーティング
-Route::delete('/posts/{id}', 'PostController@destroy')->name('posts.destroy');
+Route::delete('/users/{user}/unfollow', 'UsersController@unfollow')->name('unfollow');
+
+Route::get('/follow-list', 'FollowsController@followList')->name('follow-list');
+
+Route::get('/follower-list', 'FollowsController@followerList')->name('follower-list');
+
+Route::post('/posts/update', 'PostsController@update')->name('posts.update');
+
+//　投稿削除
+Route::delete('/posts/{id}', 'PostsController@destroy')->name('posts.destroy');
+
+//　マイページ表示
+Route::get('/users/{id}', 'UsersController@show')->name('users.show');

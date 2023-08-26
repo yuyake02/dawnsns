@@ -9,25 +9,26 @@ use App\Post;
 
 class PostsController extends Controller
 {
-    //
     public function index()
     {
-        //マイページ遷移のためのデータ取得
-        $posts =  DB::table('users')
+        // PostsとUsersテーブルを結合させてデータを取得する
+        $posts = DB::table('users')
             ->join('posts', 'users.id', '=', 'posts.user_id')
-            ->select('posts.user_id', 'posts.id', 'users.username', 'users.id as user_id')
+            ->select('posts.user_id', 'posts.id', 'users.username', 'users.id as user_id', 'posts.created_at')
             ->get();
-        //投稿内容を高順表示
-        $posts = Post::all();
-        $posts = Post::orderBy('created_at', 'desc')->get();
+        // ユーザー名を$name変数に格納
+        foreach ($posts as $post) {
+            $username = $post->username;
+            // $postオブジェクトのnameプロパティにユーザー名を代入
+            $post->username = $username;
+        }
 
-        return view('posts.index', ['posts' => $posts]);
-    }
+        $user = Auth::user();
 
-    //新しい投稿フォームを表示する
-    public function create()
-    {
-        return view('posts');
+        $posts = Post::orderBy('created_at', 'desc')
+            ->get();
+
+        return view('posts.index', ['posts' => $posts], compact('user'));
     }
 
     //新しい投稿を保存する
@@ -46,40 +47,20 @@ class PostsController extends Controller
         return redirect('posts');
     }
 
-    //指定された投稿を表示
-    public function show($id)
-    {
-        $post = Post::findOrFail($id);
-
-        return view('posts.show', compact('post'));
-    }
-
-    //投稿フォームを表示
-    public function edit($id)
-    {
-        $post = Post::findOrFail($id);
-
-        return view('posts.edit', compact('post'));
-    }
-
     //指定された投稿を更新
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $validatedData = $request->validate([
-            'posts' => 'required',
-        ]);
+        $post = Post::find($request->id);
+        // dd($post);
+        $post->update(['posts' => $request->posts]);
 
-        $post = Post::findOrFail($id);
-        $post->body = $validatedData['posts'];
-        $post->save();
-
-        return redirect('posts');
+        return redirect('top');
     }
 
     //指定された投稿を削除
     public function destroy($id)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::find($id);
         $post->delete();
 
         return redirect('posts');
