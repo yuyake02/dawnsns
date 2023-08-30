@@ -8,36 +8,34 @@
             <ul>
                 <li>{{ Form::label('User Name') }}</li>
                 <li>
+                    {{ Form::text('username', null, ['class' => 'input', 'placeholder="dawntown"' => 'UserName']) }}
                     @error('username')
                         <p class="error-message">{{ $message }}</p>
                     @enderror
-                    {{ Form::text('username', null, ['class' => 'input', 'placeholder="dawntown"' => 'UserName']) }}
                 </li>
 
                 <li>{{ Form::label('Mail Adress') }}</li>
                 <li>
+                    {{ Form::text('mail', null, ['class' => 'input', 'placeholder="dawn@dawn.jp"' => 'MailAdress']) }}
                     @error('mail')
                         <p class="error-message">{{ $message }}</p>
                     @enderror
-                    {{ Form::text('mail', null, ['class' => 'input', 'placeholder="dawn@dawn.jp"' => 'MailAdress']) }}
                 </li>
 
                 <li>{{ Form::label('Password') }}</li>
                 <li>
+                    {{ Form::input('password', 'password', null, ['class' => 'input', 'placeholder' => '●●●●●●●●']) }}
                     @error('password')
                         <p class="error-message">{{ $message }}</p>
                     @enderror
-                    {{ Form::input('password', 'password', null, ['class' => 'input', 'placeholder' => '●●●●●●●●']) }}
-
                 </li>
 
                 <li>{{ Form::label('Password Confirm') }}
                 <li>
+                    {{ Form::input('password', 'password_confirmation', null, ['class' => 'input', 'placeholder' => '●●●●●●●●']) }}
                     @error('password_confirmation')
                         <p class="error-message">{{ $message }}</p>
                     @enderror
-                    {{ Form::input('password', 'password_confirmation', null, ['class' => 'input', 'placeholder' => '●●●●●●●●']) }}
-
                 </li>
             </ul>
         </div>

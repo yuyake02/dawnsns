@@ -10,15 +10,15 @@
         <div class='form-text'>
             <ul>
                 <li>{{ Form::label('Mail Adress') }}</li>
-                <li>{{ Form::text('mail', null, ['class' => 'input', 'placeholder' => 'Mail Adress']) }}
+                <li> {{ Form::text('mail', null, ['class' => 'input', 'placeholder="dawn@dawn.jp"' => 'MailAdress']) }}
                     @error('mail')
-                        <p>{{ $message }}</p>
+                        <p class="error-message">{{ $message }}</p>
                     @enderror
                 </li>
                 <li>{{ Form::label('Password') }}</li>
-                <li>{{ Form::password('password', ['class' => 'input', 'placeholder' => 'Password']) }}
+                <li> {{ Form::input('password', 'password', null, ['class' => 'input', 'placeholder' => '●●●●●●●●']) }}
                     @error('password')
-                        <p>{{ $message }}</p>
+                        <p class="error-message">{{ $message }}</p>
                     @enderror
                 </li>
             </ul>

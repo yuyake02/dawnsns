@@ -103,3 +103,7 @@ input {
 .back-add:hover {
     background-color: #00000029;
 }
+
+.error-message {
+    color: red;
+}

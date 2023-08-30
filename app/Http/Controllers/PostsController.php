@@ -16,7 +16,7 @@ class PostsController extends Controller
             ->join('posts', 'users.id', '=', 'posts.user_id')
             ->select('posts.user_id', 'posts.id', 'users.username', 'users.id as user_id', 'posts.created_at')
             ->get();
-        // ユーザー名を$name変数に格納
+        // ユーザー名を$username変数に格納
         foreach ($posts as $post) {
             $username = $post->username;
             // $postオブジェクトのnameプロパティにユーザー名を代入

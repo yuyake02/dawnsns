@@ -38,7 +38,7 @@
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
                     </div>
                 </div>
-                <img class="user-image" src="{{ asset('images/dawn.png') }}">
+                <img class="user-image" src="{{ asset('images/dawn.png') }}" style="margin-right:100px;">
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
