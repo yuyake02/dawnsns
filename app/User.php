@@ -34,6 +34,7 @@ class User extends Authenticatable
     }
 
     //　followerモデルとのリレーション設定
+    // searchでフォロー関係を取得するために必要
     public function follows()
     {
         return $this->belongsToMany(User::class, 'follows', 'follower', 'follow');
@@ -55,9 +56,11 @@ class User extends Authenticatable
         return $this->follows()->detach($user_id);
     }
 
-    // フォローしているか
+    // フォローしているか$user_id＝フォロー関係を確認したい対象のID
     public function isFollowing($user_id)
     {
+        //条件に一致したユーザーの数を確認して取得
+        //bool=カウントが１ならtrueを0ならfalseを返す
         return (bool) $this->follows()->where('follow', $user_id)->count();
     }
 
@@ -87,12 +90,6 @@ class User extends Authenticatable
     public function getFollowingCount()
     {
         return $this->followingCount()->count();
-    }
-
-    //　ユーザー検索機能のメソッド
-    public function scopeSearch($query, $keyword)
-    {
-        return $query->where('username', 'like', "%{$keyword}%");
     }
 
     //　ハッシュ化されたパスワード

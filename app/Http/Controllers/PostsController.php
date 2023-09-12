@@ -16,15 +16,11 @@ class PostsController extends Controller
             ->join('posts', 'users.id', '=', 'posts.user_id')
             ->select('posts.user_id', 'posts.id', 'users.username', 'users.id as user_id', 'posts.created_at')
             ->get();
-        // ユーザー名を$username変数に格納
-        foreach ($posts as $post) {
-            $username = $post->username;
-            // $postオブジェクトのnameプロパティにユーザー名を代入
-            $post->username = $username;
-        }
 
+        //ログインしているユーザーを取得　ユーザー情報を使用　画像表示とか
         $user = Auth::user();
 
+        //投稿内容降順表示
         $posts = Post::orderBy('created_at', 'desc')
             ->get();
 
@@ -50,19 +46,28 @@ class PostsController extends Controller
     //指定された投稿を更新
     public function update(Request $request)
     {
+        //idからPostモデル内の投稿内容特定
         $post = Post::find($request->id);
-        // dd($post);
+        //updateメソッドで投稿内容更新　リクエストで来た投稿内容を新しく更新
         $post->update(['posts' => $request->posts]);
 
         return redirect('top');
     }
 
-    //指定された投稿を削除
+    //指定された投稿を削除id指定
     public function destroy($id)
     {
+        //idから投稿内容検索　デリートメソッドで削除
         $post = Post::find($id);
         $post->delete();
 
         return redirect('posts');
+    }
+
+    public function test()
+    {
+        $posts = Auth::user()->posts;
+
+        return view('test', compact('posts'));
     }
 }

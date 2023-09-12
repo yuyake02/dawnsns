@@ -13,9 +13,12 @@ class UsersController extends Controller
     //　ユーザー検索
     public function search(Request $request)
     {
+        //送信内容からkeywordパラメーターを取得して変数に代入
         $keyword = $request->input('keyword');
+        //キーワードが含まれているユーザ名をusers変数に代入　クエリビルダー
         $users = User::query()
             ->where('username', 'LIKE', "%{$keyword}%")
+            //クエリ実行
             ->get();
 
         return view('users.search', compact('users', 'keyword'));
@@ -24,8 +27,11 @@ class UsersController extends Controller
     //　マイページ遷移
     public function show(Request $request, $id)
     {
+        // 特定ユーザーの情報を表示させるための処理
         $user = User::find($id);
+        // 現在のリクエストのパスを代入
         $user_flg = $request->path();
+        // パスから数字以外を除外
         $user_flg = preg_replace('/[^0-9]/', '', $user_flg);
 
         return view('users.show', ['user' => $user, 'user_flg' => $user_flg]);
@@ -34,12 +40,16 @@ class UsersController extends Controller
     // フォローする
     public function follow(User $user)
     {
+        // ログインしているユーザーのIDを代入
         $followerId = auth()->user()->id;
-
+        // フォローしているか確認
         if (!Auth::user()->isFollowing($user->id)) {
             // フォローしていない場合のみフォローを作成
+            // Followモデル(Eloquent)モデルに対して新しいレコードを作成する
             Follow::create([
+                // フォローされる側のID
                 'follow' => $user->id,
+                // フォローする側のID
                 'follower' => $followerId,
             ]);
         }
@@ -50,10 +60,11 @@ class UsersController extends Controller
     // フォロー解除
     public function unfollow(User $user)
     {
+        // ログインしているユーザーを代入
         $followerId = auth()->user()->id;
 
         if (Auth::user()->isFollowing($user->id)) {
-
+            // フォローしているユーザーIDの中からfollowカラムと$followerIdが一致するユーザーを削除
             Follow::where('follow', $user->id)
                 ->where('follower', $followerId)
                 ->delete();
@@ -87,16 +98,18 @@ class UsersController extends Controller
             'newPassword.max' => '新しいパスワードは12文字以下で入力してください',
             'newPassword.regex' => '新しいパスワードは英数字のみで入力してください',
         ]);
-
+        // バリデーションが失敗したらエラー表示と元の内容を表示してリダイレクト
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $user = Auth::user();
-
+        // リクエストにimagesという名前のファイルが含まれているかチェック
         if ($request->hasFile('images')) {
             $image = $request->file('images');
-            $filename = time() . '_' . $image->getClientOriginalName();
+            // 現在の日付と時間を含んで一意性の名前を生成して代入
+            $filename = date('Ymd_His') . '_' . $image->getClientOriginalName();
+            // 保存
             $image->storeAs('public/images', $filename);
 
             $user->images = $filename;
@@ -105,7 +118,7 @@ class UsersController extends Controller
         $user->username = $request->input('username');
         $user->mail = $request->input('mail');
         $user->bio = $request->input('bio');
-
+        // filled=入力が殻ではない場合にtrueとなる、bcrypt=ハッシュ関数
         if ($request->filled('newPassword')) {
             $user->password = bcrypt($request->input('newPassword'));
         }

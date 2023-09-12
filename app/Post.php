@@ -11,7 +11,7 @@ class Post extends Model
 
     public function user()
     {
-        //Userモデルとのリレーションを定義し、投稿に紐づくユーザー情報を取得する
+        //Userモデルとのリレーションを定義し、投稿に紐づくユーザー情報を取得する　
         return $this->belongsTo(User::class);
     }
 }

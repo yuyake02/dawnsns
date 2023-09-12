@@ -15,20 +15,21 @@
         </ul>
     </div>
     <div class="d-flex justify-content-end flex-grow-1">
+        {{-- URLパスから取得したユーザーと自身が同じではない場合の条件文 --}}
         @if (Auth::id() != $user_flg)
+            {{-- フォローしているか確認 --}}
             @if (Auth::user()->isFollowing($user->id))
+                {{-- ユーザーIDの値をルートに送る --}}
                 <form action="{{ route('unfollow', ['user' => $user->id]) }}" method="POST">
-
+                    {{-- フォームでCSRFトークンを生成、削除リクエストを送信 --}}
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
-
-                    <button type="submit" class="btn btn-danger">フォローをはずす</button>
+                    <button type="submit" class="unfollow-button">フォローをはずす</button>
                 </form>
             @else
                 <form action="{{ route('follow', ['user' => $user->id]) }}" method="POST">
                     {{ csrf_field() }}
-
-                    <button type="submit" class="btn btn-primary">フォローする</button>
+                    <button type="submit" class="follow-button">フォローする</button>
                 </form>
             @endif
         @endif
@@ -46,7 +47,7 @@
                 @else
                     <img src="{{ asset('/images/dawn.png') }}" width="50" height="50">
                 @endif
-                {{ $post->user->username }}
+                <span>{{ $post->user->username }}</span>
             </li>
 
             <li>{{ $post->posts }}</li>
