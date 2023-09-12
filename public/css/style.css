@@ -182,3 +182,25 @@ input {
     align-items: center;
     justify-content: center;
 }
+
+.follow-button {
+    background-color: #4B71CABF;
+    color: #FFFFFF;
+    width: 138px;
+    height: 43px;
+    padding: 5px 5px;
+    white-space: nowrap;
+}
+
+.unfollow-button {
+    background-color: #E2563B;
+    color: #FFFFFF;
+    width: 138px;
+    height: 43px;
+    padding: 5px 5px;
+    white-space: nowrap;
+}
+
+.users-profile li {
+    display: inline-block;
+}

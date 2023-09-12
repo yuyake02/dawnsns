@@ -4,7 +4,10 @@
     <h1>Follow list</h1>
 
     <div class="follow-user">
+        {{-- $followingUsersから取得したユーザー情報を$userに格納してループ処理 --}}
+        {{-- 画像クリックでリンク先のユーザーページへ飛ぶ --}}
         @foreach ($followingUsers as $user)
+            {{-- 指定したユーザーのIDをusers.showに渡す --}}
             <a href="{{ route('users.show', ['id' => $user->id]) }}" class="user-image">
                 @if ($user->images != 'dawn.png')
                     <img src="{{ asset('storage/images/' . $user->images) }}" width="50" height="50">

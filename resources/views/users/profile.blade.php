@@ -6,7 +6,7 @@
     @else
         <img src="{{ asset('/images/dawn.png') }}" width="50" height="50">
     @endif
-
+    {{-- enctype=ファイルをアップロードするための設定 --}}
     <form action="{{ route('user.update-profile') }}" enctype="multipart/form-data" method="post">
         @csrf
         <dl class="profileUpdate">

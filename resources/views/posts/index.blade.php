@@ -21,7 +21,9 @@
             <li style="text-align: right;">{{ $post->created_at }}</li>
 
             <li>
+                {{-- id指定したユーザーのshowページに遷移 --}}
                 <a href="{{ route('users.show', ['id' => $post->user_id]) }}">
+                    {{-- 等しくないとき --}}
                     @if ($post->user->images != 'dawn.png')
                         <img src="{{ asset('storage/images/' . $post->user->images) }}" width="50" height="50">
                     @else
@@ -49,7 +51,7 @@
                                 <form action="{{ route('posts.update') }}" method="post" id="updateFome">
                                     @csrf
                                     <div class="form-group">
-                                        <textarea name="posts" id="modalPosts" placeholder="{{ $post->posts }}" rows="5" class="form-edit">{{ $post->posts }}</textarea>
+                                        <textarea name="posts" id="modalPosts" placeholder="{{ $post->posts }}" rows="5" class="form-edit"></textarea>
                                         <input type="hidden" name="id" value="{{ $post->id }}">
                                     </div>
                                     <button type="submit" class="form-submit"><img src="{{ asset('images/edit.png') }}"
@@ -61,9 +63,7 @@
                             $(function() {
                                 $('.edit-modal').on('click', function() {
                                     var postId = $(this).data('id');
-                                    var postText = $('#post_' + postId).text().trim();
 
-                                    $('#modalPosts').val(postText);
                                     $('#modal' + postId).fadeIn();
                                 });
 
